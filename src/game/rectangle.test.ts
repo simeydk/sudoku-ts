@@ -1,7 +1,6 @@
 import Rectangle from './rectangle';
 import Vector, {vector} from './vector';
 
-const rect = (a,b,c,d) => new Rectangle(a,b,c,d)
 
 test('default values are 0,0,1,1', () => {
 
@@ -78,4 +77,11 @@ test('overlap incl edges works', () => {
     expect(r.overlaps(c,true)).toBe(false)
 })
 
-// test('overlap including edges works')
+test('containsRect works', () => {
+    const big = new Rectangle(0,5,5,5)
+    const small = new Rectangle(1,4,2,2)
+    const half = new Rectangle(4,4,2,2)
+    expect(big.containsRect(small)).toBe(true)
+    expect(big.containsRect(half)).toBe(false)
+    expect(big.overlaps(half)).toBe(true)
+})

@@ -26,19 +26,19 @@ class Rectangle {
     }
 
     get topRight() {
-        return vector(this.right,this.top)
+        return vector(this.right, this.top)
     }
 
     get bottomLeft() {
-        return vector(this.left,this.bottom)
+        return vector(this.left, this.bottom)
     }
 
     get bottomRight() {
-        return vector(this.right,this.bottom)
+        return vector(this.right, this.bottom)
     }
 
     get corners() {
-        return [this.topLeft,this.topRight, this.bottomLeft, this.bottomRight]
+        return [this.topLeft, this.topRight, this.bottomLeft, this.bottomRight]
     }
 
     get array() : number[] {
@@ -49,24 +49,36 @@ class Rectangle {
         return [r.left, r.top, r.width, r.height]
     }
 
-    public static contains(r :Rectangle, v: Vector, includeEdges = true): boolean {
-        if(includeEdges) {
-            return((v.x >= r.left) && (v.x <= r.right) && (v.y <= r.top) && (v.y >= r.bottom))
-        } else {
-            return((v.x > r.left) && (v.x < r.right) && (v.y < r.top) && (v.y > r.bottom))
-        }
+    public static contains(r : Rectangle, v : Vector, includeEdges = true) : boolean {
+        // Greater than or equal to if include edges, and Greater than only if not
+        // include edges
+        const gt = includeEdges
+            ? (a : any, b : any) => a >= b
+            : (a : any, b : any) => a > b return (gt(v.x, r.left) && gt(r.right, v.x) && gt(r.top, v.y) && gt(v.y, r.bottom))
     }
 
-    public static overlaps(a : Rectangle, b: Rectangle, includeEdges = false): boolean {
-        const bInA = a.corners.map(c => b.contains(c,includeEdges)).reduce((x,y) => x || y)
-        if (bInA) {
-            return bInA
-        } else {
-            const aInB = b.corners.map(c => a.contains(c,includeEdges)).reduce((x,y) => x || y)
-            return aInB
-        }
+    public static overlaps(a : Rectangle, b : Rectangle, includeEdges = false) : boolean {
+        const bInA = a
+            .corners
+            .map(c => b.contains(c, includeEdges))
+            .reduce((x, y) => x || y)if (bInA) {
+                return bInA
+            } else {
+                const aInB = b
+                    .corners
+                    .map(c => a.contains(c, includeEdges))
+                    .reduce((x, y) => x || y)
+                return aInB
+            }
     }
-    
+
+    public static containsRect(a : Rectangle, b : Rectangle, includeEdges = true) : boolean {
+        return b
+            .corners
+            .map(c => a.contains(c, includeEdges))
+            .reduce((x, y) => x && y)
+    }
+
     public readonly position : Vector;
     public readonly size : Vector;
 
@@ -80,12 +92,15 @@ class Rectangle {
     }
 
     public contains(v : Vector, includeEdges = true) : boolean {
-        return Rectangle.contains(this,v,includeEdges)
-        // return((v.x >= this.left) && (v.x <= this.right) && (v.y <= this.top) && (v.y >= this.bottom))
+        return Rectangle.contains(this, v, includeEdges)
     }
 
-    public overlaps(r: Rectangle, includesEdges = false) : boolean {
-        return Rectangle.overlaps(this,r,includesEdges)
+    public overlaps(r : Rectangle, includesEdges = false) : boolean {
+        return Rectangle.overlaps(this, r, includesEdges)
+    }
+
+    public containsRect(r : Rectangle, includeEdges = true) : boolean {
+        return Rectangle.containsRect(this, r, includeEdges)
     }
 
 }
