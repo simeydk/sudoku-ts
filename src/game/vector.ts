@@ -16,7 +16,7 @@ class Vector {
     public readonly x : number
     public readonly y : number
 
-    private readonly precision = 6
+    get precision() {return 6}
 
     constructor(x = 0, y = 0) {
         this.x = roundFloat(x, this.precision)

@@ -1,5 +1,7 @@
-import Rectangle from './Rectangle';
+import Rectangle from './rectangle';
 import Vector, {vector} from './vector';
+
+const rect = (a,b,c,d) => new Rectangle(a,b,c,d)
 
 test('default values are 0,0,1,1', () => {
 

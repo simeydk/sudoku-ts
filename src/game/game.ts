@@ -1,8 +1,8 @@
-// import Rectangle from './Rectangle';
+import Rectangle from './rectangle';
 
 class Game {
-    // public readonly map = new Rectangle(0,200,300,200)
-    // public readonly player = new Rectangle(100,50,3,3) 
+    public readonly map = new Rectangle(0,200,300,200)
+    public readonly player = new Rectangle(100,50,20,20) 
 }
 
 export default Game
