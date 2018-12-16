@@ -3,24 +3,24 @@ interface IVector {
     y : number
 }
 
-const precision = 6
-
-function roundFloat(x: number, precision: number) : number {
+function roundFloat(x : number, precision : number) : number {
     return Number(x.toPrecision(precision))
 }
 
 class Vector {
 
-    public readonly x: number
-    public readonly y: number
-
     public static add(a : IVector, b : IVector) {
         return new Vector(a.x + b.x, a.y + b.y)
     }
 
+    public readonly x : number
+    public readonly y : number
+
+    private readonly precision = 6
+
     constructor(x = 0, y = 0) {
-        this.x = roundFloat(x,precision)
-        this.y = roundFloat(y,precision)
+        this.x = roundFloat(x, this.precision)
+        this.y = roundFloat(y, this.precision)
     }
 
     public add(b : IVector) {

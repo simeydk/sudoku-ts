@@ -1,20 +1,21 @@
-import Rectangle from "./Rectangle";
+import Rectangle from './Rectangle';
 import Vector, {vector} from './vector';
 
 test('default values are 0,0,1,1', () => {
 
-    const r = new Rectangle()
-    expect(r).toBeInstanceOf(Rectangle)
+// tslint:disable-next-line: no-shadowed-variable
+    const rDefault = new Rectangle()
+    expect(rDefault).toBeInstanceOf(Rectangle)
 
-    expect(r.left).toBe(0)
-    expect(r.top).toBe(0)
-    expect(r.width).toBe(1)
-    expect(r.height).toBe(1)
+    expect(rDefault.left).toBe(0)
+    expect(rDefault.top).toBe(0)
+    expect(rDefault.width).toBe(1)
+    expect(rDefault.height).toBe(1)
 })
 
 test('rectangle Array', () => {
-    const r = new Rectangle()
-    expect(r.array).toEqual([0, 0, 1, 1])
+    const rDefault = new Rectangle()
+    expect(rDefault.array).toEqual([0, 0, 1, 1])
 })
 
 const r = new Rectangle(2, 3, 4, 5)
