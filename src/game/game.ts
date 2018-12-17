@@ -1,4 +1,4 @@
-import Rectangle from './rect';
+import Rectangle from './rectangle';
 
 class Game {
     public readonly map = new Rectangle(0,200,300,200)

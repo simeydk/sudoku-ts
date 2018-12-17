@@ -1,4 +1,4 @@
-import Rectangle from './rect';
+import Rectangle from './rectangle';
 import Vector, {vector} from './vector';
 
 
