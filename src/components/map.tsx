@@ -1,11 +1,11 @@
 import * as React from 'react';
+import positionStyle from './positionStyle';
 
-const map = () => {
-    <div className="map">
-        <div className="player">
-            @
-        </div>
-    </div>
+const Map = (props:any) => {
+    const mapStyle = positionStyle(600, 400);
+    return (<div className="map" style={mapStyle}>
+        {props.children}
+    </div>);
 }
 
-export default map
+export default Map

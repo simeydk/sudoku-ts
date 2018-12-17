@@ -15,7 +15,7 @@ test('array works', () => {
 const w = vector(3,5)
 
 test('add works',() => {
-    const x = v.add(w)
+    const x = v.addVec(w)
     expect(x).toBeInstanceOf(Vector)
     expect(x.array).toEqual([5,8])
     expect(x.x).toBe(5)

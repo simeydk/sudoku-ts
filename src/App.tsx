@@ -1,69 +1,71 @@
 import * as React from 'react';
 import './App.css';
-import Controller from './controller/controller';
-import Game from './game/game';
-import { vector } from './game/vector';
+import Map from './components/map'
+import Player from './components/player';
+import Rectangle from './game/rectangle';
 
 class App extends React.Component {
-  public readonly game = new Game()
-  public readonly controller = new Controller(document)
-  public readonly scale = 2;
 
-  constructor(props: any) {
+  public state: any;
+
+  constructor(props : any) {
     super(props)
-    const {game,controller} = this
-    this.state = {game, controller}
-    this.setState = this.setState.bind(this)
+    const player = new Rectangle(40, 40, 20, 20)
+    this.state = {player}
+
     this.updateState = this.updateState.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.move = this.move.bind(this)
+    this.onKey = this.onKey.bind(this)
   }
 
-  public updateState() {
-    this.setState({
-      controller: this.controller,
-      game: this.game,
-    })
+  public updateState(obj : any) {
+    return this.setState((prevState) => ({
+      ...prevState,
+      ...obj
+    }))
+  }
+  public render() {
+    const {width, height, left, top} = this.state.player
+    return (
+      <div className="app">
+        <Map>
+          <Player width={width} height={height} left={left} top={top}/>
+        </Map>
+        <pre>
+          {JSON.stringify(this.state,null,2)}
+        </pre>
+      </div>
+    )
   }
 
-  public componentDidMount() {
-    document.addEventListener('keypress', this.handleKeyPress)
-    setInterval(this.updateState,50)
+  public move(x:number,y:number) {
+    const player = this.state.player.move(x,y)
+    this.updateState({player})
   }
 
-  public handleKeyPress(e: KeyboardEvent) {
-    if(e.key === ' ') {
-      console.log('space!')
-      this.game.player = this.game.player.move(vector(10,10))
+  public onKey(e: KeyboardEvent) {
+    // alert('key!')
+    const keys  :{[key:string] : [number,number]}= {
+      'ArrowLeft': [-20,0],
+      'ArrowRight': [20,0],
+      'ArrowUp': [0,-20],
+      'ArrowDown': [0,20],
+    }
+    const move = keys[e.key]
+    if(move) {
+      this.move(...move)
       e.preventDefault()
     }
   }
 
-  public render() {
-    const {height, width} = this.game.map
-    const mapStyle = {
-      height: `${height * this.scale}px`,
-      width: `${width * this.scale}px`
-    }
-    const playerStyle = {
-      height: `${this.game.player.height * this.scale}px`,
-      width: `${this.game.player.width * this.scale}px`
-    }
-    return (
-      <div className="App">
-        <div className="map" style={mapStyle}>
-          <div className="player" style={playerStyle}>
-            @
-          </div>
-        </div>
-        <pre>
-          <code>
-            {/* {JSON.stringify({game:this.game,controller:this.controller},null,'\t')} */}
-            {JSON.stringify(this.state,null,'\t')}
-          </code>
-        </pre>
-      </div>
-    );
+  public componentDidMount() {
+    document.addEventListener('keydown',this.onKey)
   }
+
+  public componentWillUnmount() {
+    document.removeEventListener('keydown',this.onKey)
+  }
+
 }
 
 export default App;

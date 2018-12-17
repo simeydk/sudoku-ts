@@ -38,7 +38,7 @@ test('corners', () => {
 })
 
 test('move works', () => {
-    const moved = r.move(vector(6, 7))
+    const moved = r.moveVec(vector(6, 7))
     expect(moved.array).toEqual([8, 10, 4, 5])
 })
 

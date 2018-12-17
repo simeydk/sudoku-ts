@@ -9,7 +9,7 @@ function roundFloat(x : number, precision : number) : number {
 
 class Vector {
 
-    public static add(a : IVector, b : IVector) {
+    public static addVec(a : IVector, b : IVector) {
         return new Vector(a.x + b.x, a.y + b.y)
     }
 
@@ -23,8 +23,12 @@ class Vector {
         this.y = roundFloat(y, this.precision)
     }
 
-    public add(b : IVector) {
-        return Vector.add(this, b)
+    public addVec(b : IVector) {
+        return Vector.addVec(this, b)
+    }
+
+    public add(x:number, y:number) {
+        return new Vector(this.x + x, this.y + y)
     }
 
     public scale(s : number) {

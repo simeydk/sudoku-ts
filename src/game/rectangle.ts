@@ -95,8 +95,12 @@ class Rectangle {
         this.size = vector(width, height)
     }
 
-    public move(vec : Vector) {
-        return new Rectangle(...this.position.add(vec).array, ...this.size.array)
+    public moveVec(vec : Vector): Rectangle {
+        return new Rectangle(...this.position.addVec(vec).array, ...this.size.array)
+    }
+
+    public move(x:number, y:number): Rectangle {
+        return this.moveVec(new Vector(x,y))
     }
 
     public contains(v : Vector, includeEdges = true) : boolean {

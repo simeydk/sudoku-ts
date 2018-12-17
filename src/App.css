@@ -30,4 +30,8 @@ html, body {
 .player {
   background: firebrick;
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
