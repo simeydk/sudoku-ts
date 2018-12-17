@@ -1,10 +1,42 @@
 import * as React from 'react';
 import './App.css';
+import Controller from './controller/controller';
 import Game from './game/game';
+import { vector } from './game/vector';
 
 class App extends React.Component {
   public readonly game = new Game()
+  public readonly controller = new Controller(document)
   public readonly scale = 2;
+
+  constructor(props: any) {
+    super(props)
+    const {game,controller} = this
+    this.state = {game, controller}
+    this.setState = this.setState.bind(this)
+    this.updateState = this.updateState.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+  }
+
+  public updateState() {
+    this.setState({
+      controller: this.controller,
+      game: this.game,
+    })
+  }
+
+  public componentDidMount() {
+    document.addEventListener('keypress', this.handleKeyPress)
+    setInterval(this.updateState,50)
+  }
+
+  public handleKeyPress(e: KeyboardEvent) {
+    if(e.key === ' ') {
+      console.log('space!')
+      this.game.player = this.game.player.move(vector(10,10))
+      e.preventDefault()
+    }
+  }
 
   public render() {
     const {height, width} = this.game.map
@@ -23,7 +55,12 @@ class App extends React.Component {
             @
           </div>
         </div>
-        {JSON.stringify(this.game)}
+        <pre>
+          <code>
+            {/* {JSON.stringify({game:this.game,controller:this.controller},null,'\t')} */}
+            {JSON.stringify(this.state,null,'\t')}
+          </code>
+        </pre>
       </div>
     );
   }

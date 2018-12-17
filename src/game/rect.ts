@@ -1,5 +1,13 @@
 import Vector, {vector} from "./vector";
 
+function genDynamicCompare(includeEqual = true) {
+    if (includeEqual) {
+        return (a:any, b: any) => (a >= b)
+    } else {
+        return (a:any, b: any) => (a > b)
+    }
+}
+
 class Rectangle {
 
     get left() {
@@ -52,24 +60,24 @@ class Rectangle {
     public static contains(r : Rectangle, v : Vector, includeEdges = true) : boolean {
         // Greater than or equal to if include edges, and Greater than only if not
         // include edges
-        const gt = includeEdges
-            ? (a : any, b : any) => a >= b
-            : (a : any, b : any) => a > b return (gt(v.x, r.left) && gt(r.right, v.x) && gt(r.top, v.y) && gt(v.y, r.bottom))
+        const gt = genDynamicCompare(includeEdges) 
+        return (gt(v.x, r.left) && gt(r.right, v.x) && gt(r.top, v.y) && gt(v.y, r.bottom))
     }
 
     public static overlaps(a : Rectangle, b : Rectangle, includeEdges = false) : boolean {
         const bInA = a
             .corners
             .map(c => b.contains(c, includeEdges))
-            .reduce((x, y) => x || y)if (bInA) {
-                return bInA
-            } else {
-                const aInB = b
-                    .corners
-                    .map(c => a.contains(c, includeEdges))
-                    .reduce((x, y) => x || y)
-                return aInB
-            }
+            .reduce((x, y) => x || y)
+        if (bInA) {
+            return bInA
+        } else {
+            const aInB = b
+                .corners
+                .map(c => a.contains(c, includeEdges))
+                .reduce((x, y) => x || y)
+            return aInB
+        }
     }
 
     public static containsRect(a : Rectangle, b : Rectangle, includeEdges = true) : boolean {
