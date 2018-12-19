@@ -1,14 +1,8 @@
 import * as React from 'react';
-import positionStyle from './positionStyle';
+import SizedPositionedDiv from './SizedPositionedDiv';
 
 const Player = (props:any) => {
-    const {height = 20,width = 20,left = 0,top = 0} = props
-    const playerStyle = positionStyle(height,width,left,top)
-    return(
-    <div className="player" style={playerStyle} >
-        @
-    </div>
-    )
+    return <SizedPositionedDiv className='player' width={20} height={20} {...props} />
 }
 
 export default Player

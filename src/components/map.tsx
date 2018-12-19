@@ -1,11 +1,8 @@
 import * as React from 'react';
-import positionStyle from './positionStyle';
+import SizedPositionedDiv from './SizedPositionedDiv';
 
 const Map = (props:any) => {
-    const mapStyle = positionStyle(600, 400);
-    return (<div className="map" style={mapStyle}>
-        {props.children}
-    </div>);
+    return <SizedPositionedDiv className='map' width={600} height={400} {...props} />
 }
 
 export default Map

@@ -8,6 +8,13 @@ function genDynamicCompare(includeEqual = true) {
     }
 }
 
+interface Iwhlt {
+    width: number,
+    height: number,
+    left: number,
+    top: number,
+}
+
 class Rectangle {
 
     get left() {
@@ -55,6 +62,11 @@ class Rectangle {
 
     public static toArray(r : Rectangle) : number[] {
         return [r.left, r.top, r.width, r.height]
+    }
+
+    public static whlt(r: Rectangle): Iwhlt {
+        const {width,height,left,top} = r
+        return {width,height,left,top}
     }
 
     public static contains(r : Rectangle, v : Vector, includeEdges = true) : boolean {
@@ -113,6 +125,10 @@ class Rectangle {
 
     public containsRect(r : Rectangle, includeEdges = true) : boolean {
         return Rectangle.containsRect(this, r, includeEdges)
+    }
+
+    public whlt(): Iwhlt {
+        return Rectangle.whlt(this)
     }
 
 }
