@@ -1,21 +1,21 @@
-import Vector, { vector } from "./vector";
+import Vector, { v } from "./vector";
 
-const v = vector(2,3)
+const vec = v(2,3)
 
 test('vector creates a Vector object',() => {
-    expect(v).toBeInstanceOf(Vector)
-    expect(v.x).toBe(2)
-    expect(v.y).toBe(3)
+    expect(vec).toBeInstanceOf(Vector)
+    expect(vec.x).toBe(2)
+    expect(vec.y).toBe(3)
 })
 
 test('array works', () => {
-    expect(v.array).toEqual([2,3])
+    expect(vec.array).toEqual([2,3])
 })
 
-const w = vector(3,5)
+const w = v(3,5)
 
 test('add works',() => {
-    const x = v.addVec(w)
+    const x = vec.addVec(w)
     expect(x).toBeInstanceOf(Vector)
     expect(x.array).toEqual([5,8])
     expect(x.x).toBe(5)
@@ -23,7 +23,7 @@ test('add works',() => {
 })
 
 test('scale works', () => {
-    const x = v.scale(1.2)
+    const x = vec.scale(1.2)
     expect(x).toBeInstanceOf(Vector)
     expect(x.array).toEqual([2.4,3.6])
 

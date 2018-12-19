@@ -41,7 +41,7 @@ class Vector {
 
 }
 
-const vector = (x : number, y : number) => new Vector(x, y)
+const v = (x : number, y : number) => new Vector(x, y)
 
 export default Vector
-export {IVector, Vector, vector}
+export {IVector, Vector, v}

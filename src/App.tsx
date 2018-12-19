@@ -1,18 +1,18 @@
 import * as React from 'react';
 import './App.css';
-import Map from './components/map'
-import Player from './components/player';
+import GameView from './components/gameView';
 import Game from './game/game';
+
+
 
 class App extends React.Component {
 
   public state: any;
-  public game = new Game()
   
   constructor(props : any) {
     super(props)
 
-    this.state = {player: this.game.player}
+    this.state = {game: new Game()}
 
     this.updateState = this.updateState.bind(this)
     this.move = this.move.bind(this)
@@ -26,23 +26,25 @@ class App extends React.Component {
     }))
   }
   public render() {
+    const {game} = this.state 
     // const {width, height, left, top} = this.state.player
-    return (
-      <div className="app">
-        <Map>
-          {/* <Player width={width} height={height} left={left} top={top}/> */}
-          <Player {...this.state.player.whlt}/>
-          {/* {this.game.enemies.map(e => )} */}
-        </Map>
-        <pre>
-          {JSON.stringify(this.game,null,2)}
-        </pre>
-      </div>
-    )
+    return <GameView game={game} />
+    // return (
+    //   <div className="app">
+    //     <Map>
+    //       {/* <Player width={width} height={height} left={left} top={top}/> */}
+    //       <Player {...game.player.whlt}/>
+    //       {/* {this.game.enemies.map(e => )} */}
+    //     </Map>
+    //     <pre>
+    //       {JSON.stringify(game,null,2)}
+    //     </pre>
+    //   </div>
+    // )
   }
 
   public move(x:number,y:number) {
-    this.game.attemptMove(x,y,(game) => this.updateState({player: game.player}))
+    this.state.game.attemptMove(x,y,(game: Game) => this.updateState({game}))
   }
 
   public onKey(e: KeyboardEvent) {

@@ -1,4 +1,4 @@
-import Vector, {vector} from "./vector";
+import Vector, {v} from "./vector";
 
 function genDynamicCompare(includeEqual = true) {
     if (includeEqual) {
@@ -36,20 +36,28 @@ class Rectangle {
         return this.top - this.height
     }
 
+    get middleH() {
+        return this.left + this.width/2
+    }
+    
+    get middleV() {
+        return this.top - this.height/2
+    }
+
     get topLeft() {
         return this.position
     }
 
     get topRight() {
-        return vector(this.right, this.top)
+        return v(this.right, this.top)
     }
 
     get bottomLeft() {
-        return vector(this.left, this.bottom)
+        return v(this.left, this.bottom)
     }
 
     get bottomRight() {
-        return vector(this.right, this.bottom)
+        return v(this.right, this.bottom)
     }
 
     get corners() {
@@ -60,20 +68,21 @@ class Rectangle {
         return Rectangle.toArray(this)
     }
 
-    public static toArray(r : Rectangle) : number[] {
-        return [r.left, r.top, r.width, r.height]
+    public static toArray(rect : Rectangle) : number[] {
+        return [rect.left, rect.top, rect.width, rect.height]
     }
 
-    public static whlt(r: Rectangle): Iwhlt {
-        const {width,height,left,top} = r
-        return {width,height,left,top}
+    public static whlt(rect: Rectangle): Iwhlt {
+        const {width, height, left, top} = rect
+        const result = {width,height,left,top}
+        return result
     }
 
-    public static contains(r : Rectangle, v : Vector, includeEdges = true) : boolean {
+    public static contains(rect : Rectangle, vec : Vector, includeEdges = true) : boolean {
         // Greater than or equal to if include edges, and Greater than only if not
         // include edges
-        const gt = genDynamicCompare(includeEdges) 
-        return (gt(v.x, r.left) && gt(r.right, v.x) && gt(r.top, v.y) && gt(v.y, r.bottom))
+        const gt = genDynamicCompare(includeEdges)
+        return (gt(vec.x, rect.left) && gt(rect.right, vec.x) && gt(rect.top, vec.y) && gt(vec.y, rect.bottom))
     }
 
     public static overlaps(a : Rectangle, b : Rectangle, includeEdges = false) : boolean {
@@ -99,12 +108,16 @@ class Rectangle {
             .reduce((x, y) => x && y)
     }
 
+    public static copy(rect: Rectangle): Rectangle {
+        return new Rectangle(rect.left,rect.top,rect.width,rect.height)
+    }
+
     public readonly position : Vector;
     public readonly size : Vector;
 
     constructor(left : number = 0, top : number = 0, width : number = 1, height : number = 1) {
-        this.position = vector(left, top)
-        this.size = vector(width, height)
+        this.position = v(left, top)
+        this.size = v(width, height)
     }
 
     public moveVec(vec : Vector): Rectangle {
@@ -115,22 +128,31 @@ class Rectangle {
         return this.moveVec(new Vector(x,y))
     }
 
-    public contains(v : Vector, includeEdges = true) : boolean {
-        return Rectangle.contains(this, v, includeEdges)
+    public contains(vec : Vector, includeEdges = true) : boolean {
+        return Rectangle.contains(this, vec, includeEdges)
     }
 
-    public overlaps(r : Rectangle, includesEdges = false) : boolean {
-        return Rectangle.overlaps(this, r, includesEdges)
+    public overlaps(rect : Rectangle, includesEdges = false) : boolean {
+        return Rectangle.overlaps(this, rect, includesEdges)
     }
 
-    public containsRect(r : Rectangle, includeEdges = true) : boolean {
-        return Rectangle.containsRect(this, r, includeEdges)
+    public containsRect(rect : Rectangle, includeEdges = true) : boolean {
+        return Rectangle.containsRect(this, rect, includeEdges)
     }
 
-    public whlt(): Iwhlt {
+    get whlt() :Iwhlt {
         return Rectangle.whlt(this)
+    }
+
+    public copy() : Rectangle {
+        return Rectangle.copy(this)
     }
 
 }
 
+function r(left : number = 0, top : number = 0, width : number = 1, height : number = 1): Rectangle {
+    return new Rectangle(left,top,width,height)
+}
+
 export default Rectangle
+export {r}
