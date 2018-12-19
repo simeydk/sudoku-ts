@@ -12,10 +12,10 @@ class Game {
         const newPlayer = this
             .player
             .move(x, y)
-        if (!this.map.containsRect(newPlayer, true)) {
-            console.log("out of bounds", this.map, newPlayer)
-        } else if (newPlayer.overlaps(this.enemies[0])) {
-            console.log("bumping into enemy", newPlayer,this.enemies[0])
+        if (!this.map.contains(newPlayer, true)) {
+            console.log("out of bounds", {map:this.map.array, newPlayer:newPlayer.array})
+        } else if (newPlayer.overlaps(this.enemies[0],false)) {
+            console.log("bumping into enemy", {newPlayer:newPlayer.array,enemy:this.enemies[0].array})
         } else {
             this.player = newPlayer
         }

@@ -7,24 +7,26 @@ function roundFloat(x : number, precision : number) : number {
     return Number(x.toPrecision(precision))
 }
 
+const globalPrecision = 6
+
 class Vector {
 
-    public static addVec(a : IVector, b : IVector) {
+    public static add(a : IVector, b : IVector) {
         return new Vector(a.x + b.x, a.y + b.y)
     }
 
     public readonly x : number
     public readonly y : number
 
-    get precision() {return 6}
-
     constructor(x = 0, y = 0) {
-        this.x = roundFloat(x, this.precision)
-        this.y = roundFloat(y, this.precision)
+        this.x = roundFloat(x, globalPrecision)
+        this.y = roundFloat(y, globalPrecision)
     }
 
+    get array() { return [this.x, this.y] }
+
     public addVec(b : IVector) {
-        return Vector.addVec(this, b)
+        return Vector.add(this, b)
     }
 
     public add(x:number, y:number) {
@@ -35,9 +37,6 @@ class Vector {
         return new Vector(this.x * s, this.y * s)
     }
 
-    get array() {
-        return [this.x, this.y]
-    }
 
 }
 

@@ -42,24 +42,26 @@ test('move works', () => {
 })
 
 test('contains incl edges works', () => {
-    expect(rect.contains(v(2,3))).toBe(true)
-    expect(rect.contains(v(2.2,2.8))).toBe(true)
-    expect(rect.contains(v(0,0))).toBe(false)
-    expect(rect.contains(v(9,9))).toBe(false)
-    expect(rect.contains(v(3,8))).toBe(false)
-    expect(rect.contains(v(3,-7))).toBe(false)
+    expect(rect.containsVec(v(2,3))).toBe(true)
+    expect(rect.containsVec(v(2.2,2.8))).toBe(true)
+    expect(rect.containsVec(v(0,0))).toBe(false)
+    expect(rect.containsVec(v(9,9))).toBe(false)
+    expect(rect.containsVec(v(3,8))).toBe(false)
+    expect(rect.containsVec(v(3,-7))).toBe(false)
 })
 
 test('contains excl edges works', () => {
-    expect(rect.contains(v(2,3))).toBe(true)
-    expect(rect.contains(v(2,3), true)).toBe(true)
-    expect(rect.contains(v(2,3), false)).toBe(false)
-    expect(rect.contains(v(3,-7),false)).toBe(false)
+    expect(rect.containsVec(v(2,3))).toBe(true)
+    expect(rect.containsVec(v(2,3), true)).toBe(true)
+    expect(rect.containsVec(v(2,3), false)).toBe(false)
+    expect(rect.containsVec(v(3,-7),false)).toBe(false)
 })
 
 test('overlap excl edges works', () => {
     const b = new Rectangle(0,0,2,3)
     expect(rect.overlaps(b)).toBe(false)
+    expect(r(0,10,10,10).overlaps(r(0,5,10,10),false)).toBe(true)
+    expect(r(0,10,10,10).overlaps(r(0,5,10,10),true)).toBe(true)
 })
 test('overlap excl edges works inside', () => {
     const c = new Rectangle(0,0,4,5)
@@ -76,15 +78,36 @@ test('overlap incl edges works', () => {
     expect(rect.overlaps(c,true)).toBe(false)
 })
 
-test('containsRect works', () => {
+test('contains works', () => {
     const big = new Rectangle(0,5,5,5)
-    const small = new Rectangle(1,4,2,2)
+    expect(big.contains(big,true)).toBe(true)
+    expect(big.contains(big,false)).toBe(false)
+    expect(big.edgesArray).toEqual([0,5,5,0])
+    const small = new Rectangle(0,5,2,3)
     const half = new Rectangle(4,4,2,2)
-    expect(big.containsRect(small)).toBe(true)
-    expect(big.containsRect(half)).toBe(false)
+    expect(big.contains(small,true)).toBe(true)
+    expect(big.contains(small,false)).toBe(false)
+    expect(big.contains(half)).toBe(false)
     expect(big.overlaps(half)).toBe(true)
+
+    expect(big.contains(r(0,2,2,2),true)).toBe(true)
+    expect(big.contains(r(0,2,2,2),false)).toBe(false)
+    expect(big.contains(r(1,2,1,1),true)).toBe(true)
+    expect(big.contains(r(1,2,1,1),false)).toBe(true)
+
 })
 
 test('whlt works', () => {
     expect(rect.whlt).toEqual({left:2,top:3,width:4,height:5})
+})
+
+test('array works',() => {
+    expect(rect.array).toEqual([2,3,4,5])
+    expect(rect.edgesArray).toEqual([2,3,6,-2])
+})
+
+test('copy works',() => {
+    const copy = rect.copy()
+    expect(copy).not.toBe(rect)
+    expect(rect.copy().array).toEqual(rect.array)
 })
