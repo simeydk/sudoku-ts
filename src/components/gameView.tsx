@@ -10,7 +10,7 @@ const GameView = (props: {game:Game}) => {
     return (
         <div className="app">
         <Map {...map.whlt}>
-          <Player {...player.whlt} />
+          <Player {...player.position.whlt} />
           {enemies.map((e,i) => <Enemy {...e.whlt} key={i} />)}
         </Map>
         <pre>

@@ -3,11 +3,12 @@ interface IVector {
     y : number
 }
 
+const globalPrecision = 6
+
 function roundFloat(x : number, precision : number) : number {
     return Number(x.toPrecision(precision))
 }
 
-const globalPrecision = 6
 
 class Vector {
 
