@@ -13,6 +13,7 @@ test('default values are 0,0,1,1', () => {
     expect(rDefault.height).toBe(1)
 })
 
+
 test('rectangle Array', () => {
     const rDefault = r()
     expect(rDefault.array).toEqual([0, 0, 1, 1])
@@ -29,11 +30,16 @@ test('custom values', () => {
 
 test('corners', () => {
     expect(rect.topLeft).toBeInstanceOf(Vector)
-    const c = rect.corners
+    const c = rect.compass
     expect(c[0].array).toEqual([2,3])
     expect(c[1].array).toEqual([6,3])
     expect(c[2].array).toEqual([2,-2])
     expect(c[3].array).toEqual([6,-2])
+    expect(c[4].array).toEqual([4,3])
+    expect(c[5].array).toEqual([4,-2])
+    expect(c[6].array).toEqual([2,0.5])
+    expect(c[7].array).toEqual([6,0.5])
+    
 })
 
 test('move works', () => {
@@ -48,6 +54,7 @@ test('contains incl edges works', () => {
     expect(rect.containsVec(v(9,9))).toBe(false)
     expect(rect.containsVec(v(3,8))).toBe(false)
     expect(rect.containsVec(v(3,-7))).toBe(false)
+
 })
 
 test('contains excl edges works', () => {
@@ -94,6 +101,16 @@ test('contains works', () => {
     expect(big.contains(r(0,2,2,2),false)).toBe(false)
     expect(big.contains(r(1,2,1,1),true)).toBe(true)
     expect(big.contains(r(1,2,1,1),false)).toBe(true)
+
+    
+    const map = r(0,200,300,200)
+    expect(map.edgesArray).toEqual([0,200,300,0])
+    
+    const player = r(60,10,20,20)
+    expect(player.edgesArray).toEqual([60,10,80,-10])
+
+
+    // expect(r(0,200,300,200).contains(r(60,10,20,20))).toBe(true)
 
 })
 

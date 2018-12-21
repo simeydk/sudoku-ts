@@ -1,15 +1,5 @@
+import { genDynamicCompare, isAscending } from './compare';
 import Vector, {v} from "./vector";
-
-// Horizontal measurements increase as you go east
-// Vertical measurements increase as you go up
-
-function genDynamicCompare(includeEqual = true) {
-    if (includeEqual) {
-        return (a:any, b: any) => (a >= b)
-    } else {
-        return (a:any, b: any) => (a > b)
-    }
-}
 
 interface Iwhlt {
     width: number,
@@ -28,16 +18,26 @@ class Rectangle {
         
     get right() { return this.left + this.width }
     get bottom() { return this.top - this.height }
-    
+    get middleV() {return (this.top + this.bottom) / 2}
+    get middleH() {return (this.left + this.right) / 2}
+
     get position() : Vector {return v(this.left,this.top)};
     get size() : Vector {return v(this.width,this.height)};
+    get middle() { return v(this.middleH, this.middleV)}
         
     get topLeft() { return this.position }
     get topRight() { return v(this.right, this.top)}
     get bottomLeft() { return v(this.left, this.bottom)}
     get bottomRight() { return v(this.right, this.bottom)}
+
+    get topMiddle() {return v(this.middleH,this.top)}
+    get bottomMiddle() {return v(this.middleH,this.bottom)}
+    get middleLeft() {return v(this.left,this.middleV)}
+    get middleRight() {return v(this.right,this.middleV)}
     
     get corners() { return [this.topLeft, this.topRight, this.bottomLeft, this.bottomRight]}
+    get mids() {return [this.topMiddle, this.bottomMiddle, this.middleLeft, this.middleRight]}
+    get compass() {return [...this.corners, ...this.mids]}
     get array() { return [this.left, this.top, this.width, this.height]}  
     
     get whlt() :Iwhlt {
@@ -63,14 +63,21 @@ class Rectangle {
         // Greater than or equal to if include edges, and Greater than only if not
         // include edges
         const gt = genDynamicCompare(includeEdges)
+        return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.bottom,vec.y,this.top])
         return (gt(vec.x, this.left) && gt(this.right, vec.x) && gt(this.top, vec.y) && gt(vec.y, this.bottom))
     }
 
     public overlaps(rect : Rectangle, includeEdges = false) : boolean {
-        return this.containsAnyCorner(rect, includeEdges) || rect.containsAnyCorner(this, includeEdges)
+        return this.containsAnyCompass(rect, includeEdges) || rect.containsAnyCompass(this, includeEdges)
     }
 
     public contains(rect : Rectangle, includeEdges = true) : boolean {
+        return (   
+            isAscending([this.left,rect.left],includeEdges) 
+            && isAscending([rect.top, this.top], includeEdges)
+            && isAscending([rect.right, this.right], includeEdges)
+            && isAscending([this.bottom,rect.bottom], includeEdges)
+        )    
         return this.containsAllCorners(rect, includeEdges)
     }
 
@@ -80,6 +87,14 @@ class Rectangle {
 
     private containsCornerArray(rect: Rectangle, includeEdges: boolean): boolean[] {
         return rect.corners.map(corner => this.containsVec(corner, includeEdges))
+    }
+
+    private containsCompassArray(rect: Rectangle, includeEdges: boolean): boolean[] {
+        return rect.compass.map(corner => this.containsVec(corner, includeEdges))
+    }
+
+    private containsAnyCompass(rect: Rectangle, includeEdges: boolean): boolean {
+        return this.containsCompassArray(rect, includeEdges).reduce((x,y) => x || y)
     }
     
     private containsAnyCorner(rect: Rectangle, includeEdges: boolean): boolean {
