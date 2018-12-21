@@ -21,4 +21,7 @@ test('isAscending works', () => {
     expect(isAscending([2,2,4,4],false)).toBe(false)
     expect(isAscending([2,2,4,3],false)).toBe(false)
     expect(isAscending([2,3,4,5],false)).toBe(true)
+
+    expect(isAscending([110,120,130],false)).toBe(true)
+    expect(isAscending([180,180,200],false)).toBe(false)
 })

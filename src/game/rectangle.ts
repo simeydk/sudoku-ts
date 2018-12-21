@@ -60,7 +60,7 @@ class Rectangle {
     }
 
     public containsVec(vec : Vector, includeEdges = true) : boolean {
-        return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.top,vec.y,this.bottom])
+        return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.top,vec.y,this.bottom],includeEdges)
     }
 
     public overlaps(rect : Rectangle, includeEdges = false) : boolean {
@@ -80,7 +80,7 @@ class Rectangle {
     }
 
     private containsCompassArray(rect: Rectangle, includeEdges: boolean): boolean[] {
-        return rect.compass.map(corner => this.containsVec(corner, includeEdges))
+        return rect.compass.map(c => this.containsVec(c, includeEdges))
     }
 
     private containsAnyCompass(rect: Rectangle, includeEdges: boolean): boolean {
