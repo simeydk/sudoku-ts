@@ -1,4 +1,4 @@
-import { genDynamicCompare, isAscending } from './compare';
+import { isAscending } from './compare';
 import Vector, {v} from "./vector";
 
 interface Iwhlt {
@@ -17,7 +17,7 @@ class Rectangle {
         ) {}
         
     get right() { return this.left + this.width }
-    get bottom() { return this.top - this.height }
+    get bottom() { return this.top + this.height }
     get middleV() {return (this.top + this.bottom) / 2}
     get middleH() {return (this.left + this.right) / 2}
 
@@ -60,11 +60,7 @@ class Rectangle {
     }
 
     public containsVec(vec : Vector, includeEdges = true) : boolean {
-        // Greater than or equal to if include edges, and Greater than only if not
-        // include edges
-        const gt = genDynamicCompare(includeEdges)
-        return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.bottom,vec.y,this.top])
-        return (gt(vec.x, this.left) && gt(this.right, vec.x) && gt(this.top, vec.y) && gt(vec.y, this.bottom))
+        return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.top,vec.y,this.bottom])
     }
 
     public overlaps(rect : Rectangle, includeEdges = false) : boolean {
@@ -72,12 +68,6 @@ class Rectangle {
     }
 
     public contains(rect : Rectangle, includeEdges = true) : boolean {
-        return (   
-            isAscending([this.left,rect.left],includeEdges) 
-            && isAscending([rect.top, this.top], includeEdges)
-            && isAscending([rect.right, this.right], includeEdges)
-            && isAscending([this.bottom,rect.bottom], includeEdges)
-        )    
         return this.containsAllCorners(rect, includeEdges)
     }
 
@@ -97,9 +87,9 @@ class Rectangle {
         return this.containsCompassArray(rect, includeEdges).reduce((x,y) => x || y)
     }
     
-    private containsAnyCorner(rect: Rectangle, includeEdges: boolean): boolean {
-        return this.containsCornerArray(rect, includeEdges).reduce((x,y) => x || y)
-    }
+    // private containsAnyCorner(rect: Rectangle, includeEdges: boolean): boolean {
+    //     return this.containsCornerArray(rect, includeEdges).reduce((x,y) => x || y)
+    // }
 
     private containsAllCorners(rect: Rectangle, includeEdges: boolean): boolean {
         return this.containsCornerArray(rect, includeEdges).reduce((x,y) => x && y)

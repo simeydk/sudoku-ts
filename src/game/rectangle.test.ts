@@ -24,7 +24,7 @@ const rect = r(2, 3, 4, 5)
 test('custom values', () => {
     expect(rect.array).toEqual([2, 3, 4, 5])
     expect(rect.right).toBe(6)
-    expect(rect.bottom).toBe(-2)
+    expect(rect.bottom).toBe(8)
 
 })
 
@@ -33,12 +33,12 @@ test('corners', () => {
     const c = rect.compass
     expect(c[0].array).toEqual([2,3])
     expect(c[1].array).toEqual([6,3])
-    expect(c[2].array).toEqual([2,-2])
-    expect(c[3].array).toEqual([6,-2])
+    expect(c[2].array).toEqual([2,8])
+    expect(c[3].array).toEqual([6,8])
     expect(c[4].array).toEqual([4,3])
-    expect(c[5].array).toEqual([4,-2])
-    expect(c[6].array).toEqual([2,0.5])
-    expect(c[7].array).toEqual([6,0.5])
+    expect(c[5].array).toEqual([4,8])
+    expect(c[6].array).toEqual([2,5.5])
+    expect(c[7].array).toEqual([6,5.5])
     
 })
 
@@ -47,17 +47,18 @@ test('move works', () => {
     expect(moved.array).toEqual([8, 10, 4, 5])
 })
 
-test('contains incl edges works', () => {
+test('containsVec incl edges works', () => {
     expect(rect.containsVec(v(2,3))).toBe(true)
-    expect(rect.containsVec(v(2.2,2.8))).toBe(true)
+    expect(rect.containsVec(v(2.2,3.1))).toBe(true)
+    expect(rect.containsVec(v(2.2,2.9))).toBe(false)
     expect(rect.containsVec(v(0,0))).toBe(false)
     expect(rect.containsVec(v(9,9))).toBe(false)
-    expect(rect.containsVec(v(3,8))).toBe(false)
+    expect(rect.containsVec(v(3,8))).toBe(true)
     expect(rect.containsVec(v(3,-7))).toBe(false)
 
 })
 
-test('contains excl edges works', () => {
+test('containsVec excl edges works', () => {
     expect(rect.containsVec(v(2,3))).toBe(true)
     expect(rect.containsVec(v(2,3), true)).toBe(true)
     expect(rect.containsVec(v(2,3), false)).toBe(false)
@@ -89,7 +90,7 @@ test('contains works', () => {
     const big = new Rectangle(0,5,5,5)
     expect(big.contains(big,true)).toBe(true)
     expect(big.contains(big,false)).toBe(false)
-    expect(big.edgesArray).toEqual([0,5,5,0])
+    expect(big.edgesArray).toEqual([0,5,5,10])
     const small = new Rectangle(0,5,2,3)
     const half = new Rectangle(4,4,2,2)
     expect(big.contains(small,true)).toBe(true)
@@ -97,20 +98,19 @@ test('contains works', () => {
     expect(big.contains(half)).toBe(false)
     expect(big.overlaps(half)).toBe(true)
 
-    expect(big.contains(r(0,2,2,2),true)).toBe(true)
-    expect(big.contains(r(0,2,2,2),false)).toBe(false)
-    expect(big.contains(r(1,2,1,1),true)).toBe(true)
-    expect(big.contains(r(1,2,1,1),false)).toBe(true)
-
-    
+    expect(big.contains(r(0,5,2,2),true)).toBe(true)
+    expect(big.contains(r(0,5,2,2),false)).toBe(false)
+    expect(big.contains(r(1,5,1,1),true)).toBe(true)
+    expect(big.contains(r(1,5,1,1),false)).toBe(true)
+        
     const map = r(0,200,300,200)
-    expect(map.edgesArray).toEqual([0,200,300,0])
+    expect(map.edgesArray).toEqual([0,200,300,400])
     
     const player = r(60,10,20,20)
-    expect(player.edgesArray).toEqual([60,10,80,-10])
+    expect(player.edgesArray).toEqual([60,10,80,30])
 
 
-    // expect(r(0,200,300,200).contains(r(60,10,20,20))).toBe(true)
+    expect(r(0,0,300,200).contains(r(60,10,20,20))).toBe(true)
 
 })
 
@@ -120,7 +120,7 @@ test('whlt works', () => {
 
 test('array works',() => {
     expect(rect.array).toEqual([2,3,4,5])
-    expect(rect.edgesArray).toEqual([2,3,6,-2])
+    expect(rect.edgesArray).toEqual([2,3,6,8])
 })
 
 test('copy works',() => {
