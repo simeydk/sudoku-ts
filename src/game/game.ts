@@ -1,4 +1,5 @@
 import Actor from './Actor';
+import Item from './Item';
 import Rectangle, {r} from './rectangle';
 
 const ens = [
@@ -8,12 +9,19 @@ const ens = [
     new Actor(200,73,0,0,r(250,150,40,40)),    
 ]
 
+const defaultItems = [
+    new Item('sword',5,0,0,r(10,10,10,10)),
+    new Item('shield',0,2,0,r(10,180,10,10)),
+    new Item('jewel',0,0,1,r(30,180,10,10)),
+]
+
 class Game {
 
     constructor(
         public map : Rectangle = r(0, 0, 300, 200), 
         public player : Actor = new Actor(100,10,2,3,r(100, 50, 20, 20)), 
-        public enemies : Actor[] = ens
+        public enemies : Actor[] = ens,
+        public items: Item[] = defaultItems
         ) { }
 
     public attemptMove(x : number, y : number, callback : (g : Game) => any) {
@@ -33,7 +41,15 @@ class Game {
                 }
                 console.log("fighting with enemy", {newPlayer:newPlayer.array,enemy:e.position.array})
             } else {
-                this.player.position = newPlayer
+                const clashedItems = this.items.filter(item => newPlayer.overlaps(item.position,false))
+                if (clashedItems.length > 0) {
+                    const item = clashedItems[0]
+                    this.player.items.push(item)
+                    this.items = this.items.filter(i => i !== item)
+                    if(clashedItems.length === 1) {this.player.position = newPlayer}
+                } else {
+                    this.player.position = newPlayer
+                }
             }
         }
          

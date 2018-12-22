@@ -39,6 +39,16 @@ html, body {
   align-items: center;
 }
 
+.item {
+  background: paleturquoise;
+  color: rgba(255,255,255,0.1);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .enemy {
   background: firebrick;
   color: rgba(255,255,255,0.1);
