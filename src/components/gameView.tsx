@@ -11,7 +11,7 @@ const GameView = (props: {game:Game}) => {
         <div className="app">
         <Map {...map.whlt}>
           <Player {...player.position.whlt} />
-          {enemies.map((e,i) => <Enemy {...e.whlt} key={i} />)}
+          {enemies.map((e,i) => <Enemy {...e.position.whlt} key={i} />)}
         </Map>
         <pre>
           {JSON.stringify(props.game,null,2)}
