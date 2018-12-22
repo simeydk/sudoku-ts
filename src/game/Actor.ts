@@ -5,7 +5,7 @@ import Rectangle from "./rectangle";
 class Actor {
 
     public attributes : Attributes
-    public items: Item[]
+    public items: Item[] = []
     private pvtHealth: number
 
     constructor(health : number = 100, strength : number = 0, armor : number = 0, luck : number = 0, public position : Rectangle = new Rectangle(-100, -100, 1, 1)) {
@@ -24,11 +24,11 @@ class Actor {
     }
 
     get totalAttributes(): Attributes {
-        return this.attributes
+        return this.attributes.sum(this.totalItemAttributes)
     }
 
     get totalItemAttributes(): Attributes {
-        return new Attributes()
+        return Attributes.sum(...this.items.map(i => i.attributes))
     }
 
     public attack(enemy:Actor, retaliate:boolean = false) {
