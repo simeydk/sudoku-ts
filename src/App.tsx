@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import './App.scss';
 import GameView from './components/gameView';
 import Game from './game/game';
 
@@ -7,7 +8,7 @@ import Game from './game/game';
 
 class App extends React.Component {
 
-  public state: any;
+  public state: {game:Game}
   
   constructor(props : any) {
     super(props)
@@ -27,20 +28,7 @@ class App extends React.Component {
   }
   public render() {
     const {game} = this.state 
-    // const {width, height, left, top} = this.state.player
     return <GameView game={game} />
-    // return (
-    //   <div className="app">
-    //     <Map>
-    //       {/* <Player width={width} height={height} left={left} top={top}/> */}
-    //       <Player {...game.player.whlt}/>
-    //       {/* {this.game.enemies.map(e => )} */}
-    //     </Map>
-    //     <pre>
-    //       {JSON.stringify(game,null,2)}
-    //     </pre>
-    //   </div>
-    // )
   }
 
   public move(x:number,y:number) {
@@ -48,7 +36,6 @@ class App extends React.Component {
   }
 
   public onKey(e: KeyboardEvent) {
-    // alert('key!')
     const keys  :{[key:string] : [number,number]}= {
       'ArrowLeft': [-10,0],
       'ArrowRight': [10,0],

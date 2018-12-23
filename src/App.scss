@@ -1,25 +1,6 @@
-html, body, body * {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+pre {
+  color: blue;
+  position: absolute;
 }
 
 .player {
@@ -62,17 +43,5 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.status-playing {
-  border: 2px solid gray
-}
-
-.status-won {
-  border: 2px solid green
-}
-
-.status-lost {
-  border: 2px solid red
 }
 

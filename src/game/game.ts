@@ -2,12 +2,22 @@ import Actor from './Actor';
 import Item from './Item';
 import Rectangle, {r} from './rectangle';
 
-const ens = [
+enum EnumStatus {
+    playing,
+    won,
+    lost
+}
+
+const defaultEnemies = [
     new Actor(50,5,0,0,r(120,160,20,20)),
     new Actor(60,6,0,0,r(20,20,20,20)),
     new Actor(17,8,0,0,r(200,20,20,20)),    
     new Actor(200,73,0,0,r(250,150,40,40)),    
 ]
+
+defaultEnemies[2].items.push(new Item('blade',10,0,0))
+defaultEnemies[0].unusedItems.push(new Item('supershield',0,50,0))
+defaultEnemies[1].unusedItems.push(new Item('longclaw',37,0,0))
 
 const defaultItems = [
     new Item('sword',5,0,0,r(10,10,10,10)),
@@ -17,10 +27,12 @@ const defaultItems = [
 
 class Game {
 
+    public status: EnumStatus = EnumStatus.playing;
+
     constructor(
-        public map : Rectangle = r(0, 0, 300, 200), 
+        public map : Rectangle = r(0, 0, 600, 400), 
         public player : Actor = new Actor(100,10,2,3,r(100, 50, 20, 20)), 
-        public enemies : Actor[] = ens,
+        public enemies : Actor[] = defaultEnemies,
         public items: Item[] = defaultItems
         ) { }
 
@@ -35,9 +47,19 @@ class Game {
             if (clashedEnemies.length > 0) {
                 const e = clashedEnemies[0]
                 this.player.attack(e,true)
-                this.enemies = this.enemies.filter(enemy => (enemy.health > 0))
+                if (!e.alive) {
+                    this.enemies = this.enemies.filter(enemy => (enemy.alive))
+                    if(this.enemies.length <= 0) { this.status = EnumStatus.won }
+                    e.allItems.forEach(item => {
+                        const {left, top} = e.position
+                        Object.assign(item.position,{left,top})
+                        this.items.push(item)
+                    })
+                    e.items = []
+                }
                 if (!this.player.alive) {
                     Object.assign(this.player.position,{left: -100, top: -100})
+                    this.status = EnumStatus.lost
                 }
                 console.log("fighting with enemy", {newPlayer:newPlayer.array,enemy:e.position.array})
             } else {
@@ -71,3 +93,4 @@ class Game {
 }
 
 export default Game
+export {EnumStatus}

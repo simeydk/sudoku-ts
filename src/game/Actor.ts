@@ -32,6 +32,10 @@ class Actor {
         return Attributes.sum(...this.items.map(i => i.attributes))
     }
 
+    get allItems(): Item[] {
+        return this.items.concat(this.unusedItems)
+    }
+
     public attack(enemy:Actor, retaliate:boolean = false) {
         
         enemy.health -= Math.max(Math.max(this.totalAttributes.strength,0) - enemy.totalAttributes.armor,0)
