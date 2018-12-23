@@ -6,6 +6,7 @@ class Actor {
 
     public attributes : Attributes
     public items: Item[] = []
+    public unusedItems: Item[] = []
     private pvtHealth: number
 
     constructor(health : number = 100, strength : number = 0, armor : number = 0, luck : number = 0, public position : Rectangle = new Rectangle(-100, -100, 1, 1)) {
@@ -33,7 +34,7 @@ class Actor {
 
     public attack(enemy:Actor, retaliate:boolean = false) {
         
-        enemy.health -= this.totalAttributes.strength
+        enemy.health -= Math.max(Math.max(this.totalAttributes.strength,0) - enemy.totalAttributes.armor,0)
         
         if (retaliate && (enemy.alive)) {
             enemy.attack(this)
