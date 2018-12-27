@@ -55,10 +55,14 @@ class Rectangle {
         return this.move(vec.x,vec.y)
     }
 
-    public move(x:number, y:number): Rectangle {
-        return new Rectangle(this.left + x,this.top + y,this.width, this.height)
+    public moveTo(x:number, y:number): Rectangle {
+        return new Rectangle(x, y, this.width, this.height)
     }
 
+    public move(x:number, y:number): Rectangle {
+        return this.moveTo(this.left + x,this.top + y)
+    }
+    
     public containsVec(vec : Vector, includeEdges = true) : boolean {
         return isAscending([this.left,vec.x,this.right],includeEdges) && isAscending([this.top,vec.y,this.bottom],includeEdges)
     }

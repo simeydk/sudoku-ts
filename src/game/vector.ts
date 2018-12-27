@@ -12,8 +12,12 @@ function roundFloat(x : number, precision : number) : number {
 
 class Vector {
 
-    public static add(a : IVector, b : IVector) {
+    public static add(a : Vector, b : Vector) : Vector {
         return new Vector(a.x + b.x, a.y + b.y)
+    }
+
+    public static subtract(a : Vector, b : Vector) : Vector {
+        return new Vector(a.x - b.x, a.y - b.y)
     }
 
     public readonly x : number
@@ -26,7 +30,7 @@ class Vector {
 
     get array() { return [this.x, this.y] }
 
-    public addVec(b : IVector) {
+    public addVec(b : Vector) {
         return Vector.add(this, b)
     }
 

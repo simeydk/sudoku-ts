@@ -22,6 +22,12 @@ test('add works',() => {
     expect(x.y).toBe(8)
 })
 
+test('subtract works',() => {
+    const x = Vector.subtract(w,vec)
+    expect(x.array).toEqual([1,2])
+
+})
+
 test('scale works', () => {
     const x = vec.scale(1.2)
     expect(x).toBeInstanceOf(Vector)

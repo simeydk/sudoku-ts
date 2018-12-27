@@ -93,4 +93,4 @@ class Game {
 }
 
 export default Game
-export {EnumStatus}
+export {EnumStatus, Actor, Item}
