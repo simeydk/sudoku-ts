@@ -1,8 +1,8 @@
 import * as React from 'react';
 import SizedPositionedDiv from './SizedPositionedDiv';
 
-const Player = (props:any) => {
+const Item = (props:any) => {
     return <SizedPositionedDiv className='item' width={20} height={20} {...props} />
 }
 
-export default Player
+export default Item

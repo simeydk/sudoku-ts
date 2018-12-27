@@ -42,6 +42,10 @@ class Vector {
         return new Vector(this.x * s, this.y * s)
     }
 
+    get diagonal() {
+        return roundFloat(Math.sqrt(this.x ** 2 + this.y ** 2),globalPrecision)
+    }
+
 
 }
 

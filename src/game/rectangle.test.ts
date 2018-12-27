@@ -100,27 +100,18 @@ test('contains works', () => {
     expect(big.contains(big,true)).toBe(true)
     expect(big.contains(big,false)).toBe(false)
     expect(big.edgesArray).toEqual([0,5,5,10])
-    // const small = new Rectangle(0,5,2,3)
-    // const half = new Rectangle(4,4,2,2)
-    // expect(big.contains(small,true)).toBe(true)
-    // expect(big.contains(small,false)).toBe(false)
-    // expect(big.contains(half)).toBe(false)
-    // expect(big.overlaps(half)).toBe(true)
+    const small = new Rectangle(0,5,2,3)
+    const half = new Rectangle(4,4,2,2)
+    expect(big.contains(small,true)).toBe(true)
+    expect(big.contains(small,false)).toBe(false)
+    expect(big.contains(half)).toBe(false)
+    expect(big.overlaps(half)).toBe(true)
 
-    // expect(big.contains(r(0,5,2,2),true)).toBe(true)
-    // expect(big.contains(r(0,5,2,2),false)).toBe(false)
-    // expect(big.contains(r(1,5,1,1),true)).toBe(true)
-    // expect(big.contains(r(1,5,1,1),false)).toBe(true)
+    expect(big.contains(r(0,5,2,2),true)).toBe(true)
+    expect(big.contains(r(0,5,2,2),false)).toBe(false)
+    expect(big.contains(r(1,5,1,1),true)).toBe(true)
+    expect(big.contains(r(1,5,1,1),false)).toBe(false)
         
-    // const map = r(0,200,300,200)
-    // expect(map.edgesArray).toEqual([0,200,300,400])
-    
-    // const player = r(60,10,20,20)
-    // expect(player.edgesArray).toEqual([60,10,80,30])
-
-
-    // expect(r(0,0,300,200).contains(r(60,10,20,20))).toBe(true)
-
 })
 
 test('whlt works', () => {
@@ -136,4 +127,23 @@ test('copy works',() => {
     const copy = rect.copy()
     expect(copy).not.toBe(rect)
     expect(rect.copy().array).toEqual(rect.array)
+})
+
+test('longest radius', () => {
+    const x = r(100,100,6,8)
+    expect(x.longestRadius).toBe(5)
+    expect(x.move(234,23412).longestRadius).toBe(5)
+})
+
+test('middleDistanceTo works', () => {
+    const x = r(0,0,10,10)
+    
+    expect(x.MiddleDistanceTo(x.move(100,0))).toBe(100)
+    expect(x.MiddleDistanceTo(x.move(0,100))).toBe(100)
+    expect(x.MiddleDistanceTo(x.move(30,40))).toBe(50)
+    
+    const y = r(100,100,20,30)
+
+    expect(x.MiddleDistanceTo(y)).toBeCloseTo(Math.sqrt((110-5)**2+(115-5)**2))
+
 })

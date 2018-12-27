@@ -34,3 +34,11 @@ test('scale works', () => {
     expect(x.array).toEqual([2.4,3.6])
 
 })
+
+test('diagonal works', () => {
+    const x = v(3,4)
+    expect(x.diagonal).toEqual(5)
+
+    expect(w.diagonal).toBeCloseTo(Math.sqrt(3**2 + 5 **2))
+
+})

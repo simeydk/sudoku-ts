@@ -38,7 +38,9 @@ class Rectangle {
     get corners() { return [this.topLeft, this.topRight, this.bottomLeft, this.bottomRight]}
     get mids() {return [this.topMiddle, this.bottomMiddle, this.middleLeft, this.middleRight]}
     get compass() {return [...this.corners, ...this.mids]}
-    get array() { return [this.left, this.top, this.width, this.height]}  
+    get array() { return [this.left, this.top, this.width, this.height]}
+
+    get longestRadius() { return Vector.subtract(this.middle,this.bottomRight).diagonal}
     
     get whlt() :Iwhlt {
         const {width, height, left, top} = this
@@ -68,16 +70,28 @@ class Rectangle {
     }
 
     public overlaps(rect : Rectangle, includeEdges = false) : boolean {
-        return this.containsAnyCompass(rect, includeEdges) || rect.containsAnyCompass(this, includeEdges)
+        if(includeEdges === false) {
+            // return !(this.right <= rect.left || this.left >= rect.right || this.bottom <= rect.top || this.top >= rect.bottom)
+            return (this.right < rect.left && this.left > rect.right && this.bottom < rect.top && this.top > rect.bottom)
+            
+        } else {
+            return this.containsAnyCompass(rect, includeEdges) || rect.containsAnyCompass(this, includeEdges)
+        }
     }
 
     public contains(rect : Rectangle, includeEdges = true) : boolean {
         return this.containsAllCorners(rect, includeEdges)
     }
 
+    public MiddleDistanceTo(rect: Rectangle) : number {
+        return Vector.subtract(this.middle, rect.middle).diagonal
+    }
+
+
     public copy() : Rectangle {
         return new Rectangle(this.left, this.top, this.width, this.height) 
     }
+
 
     private containsCornerArray(rect: Rectangle, includeEdges: boolean): boolean[] {
         return rect.corners.map(corner => this.containsVec(corner, includeEdges))
@@ -98,6 +112,7 @@ class Rectangle {
     private containsAllCorners(rect: Rectangle, includeEdges: boolean): boolean {
         return this.containsCornerArray(rect, includeEdges).reduce((x,y) => x && y)
     }
+
 
 
 }
