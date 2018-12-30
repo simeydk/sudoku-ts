@@ -1,3 +1,5 @@
+import ISettable from './ISettable';
+
 class Cell {
 
     constructor(
@@ -13,6 +15,19 @@ class Cell {
     }
 
     get isEmpty(): boolean { return (this.value === 0) }
+
+    get settable(): ISettable[] {
+        if(this.isEmpty) {
+            return []
+        }
+        const pv = this.possibleValues
+        if(pv.length === 1) {
+            return [{cell:this, value: pv[0]}]
+        } else {
+            return []
+        }
+
+    }
 
     public updateCanBe() {
         if (this.value !== 0) {
