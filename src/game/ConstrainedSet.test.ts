@@ -39,9 +39,9 @@ test('possibleCells', () => {
 } )
 
 test('settables', () => {
-    expect(cs.settableValues).toEqual([{cell:cs.cells[2],value:3}])
+    expect(cs.settableCells).toEqual([{cell:cs.cells[2],value:3}])
 })
 
 // .forEach(n => {cs.cells[n].updateCanBe()});
 
-console.log(JSON.stringify(cs.missingVs.map(v => ({v:v.value,c:v.cells.map(c=> c.index).join('')}))))
+// console.log(JSON.stringify(cs.missingVs.map(v => ({v:v.value,c:v.cells.map(c=> c.index).join('')}))))
