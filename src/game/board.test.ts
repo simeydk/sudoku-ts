@@ -37,3 +37,21 @@ test('blocks work', () => {
 test('settables on empty board',() => {
     expect(b.settables).toEqual([])
 })
+
+test('toValueString', () => {
+    // console.log('VALUESTRING', b.toValueString())
+    expect(b.toValueString('.','','')).toEqual('.'.repeat(81))
+    // b.cells[2].value
+    const c = new Board
+    c.cells[3].value = 4
+    c.cells[10].value = 8
+    c.cells[80].value = 9
+    c.cells[30].value = 5
+    c.cells[55].value = 1
+    c.cells[70].value = 3
+
+    const cStr = "- - - 4 - - - - -|- 8 - - - - - - -|- - - - - - - - -|- - - 5 - - - - -|- - - - - - - - -|- - - - - - - - -|- 1 - - - - - - -|- - - - - - - 3 -|- - - - - - - - 9"
+
+    expect(c.toValueString('-',' ','|')).toEqual(cStr)
+
+})
