@@ -14,6 +14,12 @@ class Cell {
 
     get isEmpty(): boolean { return (this.value === 0) }
 
+    public updateCanBe() {
+        if (this.value !== 0) {
+            this.canBe = this.canBe.map((x,i) => (i === this.value - 1))
+        }
+    }
+
 }
 
 export default Cell

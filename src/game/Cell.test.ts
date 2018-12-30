@@ -17,6 +17,10 @@ test('possibleValues works', ()=> {
 test('set value works', () => {
     const x = new Cell(4)
     expect(x.value).toBe(4)
-    // expect(x.possibleValues).toEqual([4])
-    expect(x.value = 5).toThrowError(/.*/)
+})
+
+test('updateCanBe', () => {
+    const x = new Cell(4)
+    x.updateCanBe()
+    expect(x.canBe).toEqual([false,false,false,true,false,false,false,false,false])
 })
