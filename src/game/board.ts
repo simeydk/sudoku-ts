@@ -1,5 +1,6 @@
 import Cell from './Cell';
 import ConstrainedSet from './constrainedSet';
+import ISettable from './ISettable';
 
 class Board {
 
@@ -9,10 +10,10 @@ class Board {
     public blocks : ConstrainedSet[] = []
 
     constructor() {
-        this.populateInitial()
+        this.setupStructure()
     }
 
-    private populateInitial() {
+    private setupStructure() {
         
         this.cells = Array(81)
             .fill('')
@@ -52,6 +53,28 @@ class Board {
 
             })
 
+    }
+
+    get constrainedSets(): ConstrainedSet[] {
+        return [...this.rows,...this.columns,...this.blocks]
+    }
+
+    get settablesFromConstrainedSets(): ISettable[] {
+        return this.constrainedSets.map(cs => cs.settableCells).reduce((a,b) => [...a,...b])
+    }
+
+    get settablesFromCells(): ISettable[] {
+        return this.cells.map(cell => cell.settable).reduce((a,b) => [...a,...b])
+    }
+
+    get settables(): ISettable[] {
+        return [...this.settablesFromCells, ...this.settablesFromConstrainedSets]
+    }
+
+    get toValueString(): string {
+        return this.rows.map(row => {
+            row.cells.map(cell => cell.value).join('')
+        }).join('\n')
     }
 
 }

@@ -33,3 +33,7 @@ test('blocks work', () => {
     expect(b.blocks[0].indexArray).toEqual([0,1,2,9,10,11,18,19,20])
     expect(b.blocks[4].indexArray).toEqual([30,31,32,39,40,41,48,49,50])
 })
+
+test('settables on empty board',() => {
+    expect(b.settables).toEqual([])
+})
