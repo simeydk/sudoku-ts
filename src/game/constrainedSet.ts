@@ -1,14 +1,11 @@
 import Cell from "./Cell";
+import ISettable from './ISettable';
 
 interface IValue {
     value: number,
     cells: Cell[]
 }
 
-interface ISettable {
-    cell: Cell
-    value: number
-}
 
 class ConstrainedSet {
 
@@ -50,7 +47,7 @@ class ConstrainedSet {
         })
     }
 
-    get settableValues(): ISettable[] {
+    get settableCells(): ISettable[] {
         return this.missingVs.filter(v => v.cells.length === 1).map(v => ({value:v.value,cell:v.cells[0]}))
     }
 
