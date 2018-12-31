@@ -28,8 +28,16 @@ class ConstrainedSet {
             })
     }
 
+    get completedCells() : Cell[] {
+        return this.cells.filter(cell => cell.value !== 0)
+    }
+
+    get emptyCells() : Cell[] {
+        return this.cells.filter(cell => cell.value === 0)
+    }
+
     get completedValues(): number[] {
-        return this.cells.filter(cell => cell.value !== 0).map(cell => cell.value).sort()
+        return this.completedCells.map(cell => cell.value).sort()
     }
 
     get missingValues() {
@@ -49,6 +57,12 @@ class ConstrainedSet {
 
     get settableCells(): ISettable[] {
         return this.missingVs.filter(v => v.cells.length === 1).map(v => ({value:v.value,cell:v.cells[0]}))
+    }
+
+    public updateCanBe() {
+        this.emptyCells.forEach(cell => {
+            this.completedValues.forEach(value => cell.canBe[value-1] = false)
+        })
     }
 
 }

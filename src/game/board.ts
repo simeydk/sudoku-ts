@@ -30,10 +30,23 @@ class Board {
         return [...this.settablesFromCells, ...this.settablesFromConstrainedSets]
     }
 
+    get completedCells() : Cell[] {
+        return this.cells.filter(cell => cell.value !== 0)
+    }
+
+    get emptyCells() : Cell[] {
+        return this.cells.filter(cell => cell.value === 0)
+    }
+
     public toValueString(zero = '.', colDelim = '', rowDelim = '\n'): string {
         return this.rows.map(row => {
             return row.cells.map(cell => (cell.value === 0) ? zero : cell.value).join(colDelim)
         }).join(rowDelim)
+    }
+
+    public updateCanBe() {
+        this.constrainedSets.forEach(cs => cs.updateCanBe())
+        this.completedCells.forEach(cell => cell.updateCanBe())
     }
 
 }
