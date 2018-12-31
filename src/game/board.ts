@@ -43,7 +43,6 @@ class Board {
             return row.cells.map(cell => (cell.value === 0) ? zero : cell.value).join(colDelim)
         }).join(rowDelim)
     }
-
     public updateCanBe() {
         this.constrainedSets.forEach(cs => cs.updateCanBe())
         this.completedCells.forEach(cell => cell.updateCanBe())
