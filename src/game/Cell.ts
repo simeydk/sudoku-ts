@@ -5,7 +5,10 @@ class Cell {
     constructor(
         public value: number = 0,
         public canBe: boolean[] = new Array(9).fill(true),
-        public index: number | null = null
+        public index: number | null = null,
+        public row: number | null = null,
+        public column: number | null = null,
+        public block: number | null = null,
     ) {
     }
     
@@ -18,15 +21,15 @@ class Cell {
 
     get settable(): ISettable[] {
         if(this.isEmpty) {
-            return []
-        }
-        const pv = this.possibleValues
-        if(pv.length === 1) {
-            return [{cell:this, value: pv[0]}]
+            const pv = this.possibleValues
+            if(pv.length === 1) {
+                return [{cell:this, value: pv[0]}]
+            } else {
+                return []
+            }
         } else {
             return []
         }
-
     }
 
     public updateCanBe() {
