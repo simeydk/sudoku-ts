@@ -1,4 +1,4 @@
-import { Board } from './board';
+import Board from './board';
 import Cell from './Cell';
 import ConstrainedSet from './constrainedSet';
 
