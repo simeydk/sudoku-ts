@@ -9,7 +9,10 @@ const boardString = `
     .85.9....
     ...95..7.
     ..246...9
+    .........
 `
+
+const boardStringTrim = boardString.split('').map(s => s.trim()).join('')
 
 test('parseBoardString', () => {
     const short = '    123... 045'
@@ -19,4 +22,5 @@ test('parseBoardString', () => {
 test('importFromString',() => {
     const bd = boardFromString(boardString)
     expect(bd).toBeInstanceOf(Board)
+    expect(bd.toValueString('.','','')).toBe(boardStringTrim)
 })
