@@ -10,7 +10,7 @@ interface IValue {
 class ConstrainedSet {
 
     public cells : Cell[] = []
-    constructor(populate: boolean = true) { 
+    constructor(populate: boolean = false) { 
         if(populate) {
             this.cells = Array(9).fill('').map((x,i) => new Cell(undefined,undefined,i))
         }

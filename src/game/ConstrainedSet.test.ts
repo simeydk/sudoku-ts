@@ -1,13 +1,13 @@
 import ConstrainedSet from "./constrainedSet";
 
 test('constructor works',() => {
-    const csDefault = new ConstrainedSet
+    const csDefault = new ConstrainedSet(true)
     expect(csDefault).toBeInstanceOf(ConstrainedSet)
     expect(csDefault.cells).toBeDefined()
     expect(csDefault.cells.length).toBe(9)
 })
 
-const cs = new ConstrainedSet
+const cs = new ConstrainedSet(true)
 cs.cells[3].value = 5
 cs.cells[7].value = 2
 cs.cells[3].updateCanBe()
