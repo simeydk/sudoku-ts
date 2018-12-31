@@ -51,8 +51,6 @@ class ConstrainedSet {
         return this.missingVs.filter(v => v.cells.length === 1).map(v => ({value:v.value,cell:v.cells[0]}))
     }
 
-
-
 }
 
 export default ConstrainedSet
