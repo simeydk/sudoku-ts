@@ -30,3 +30,4 @@ function boardFromString(str: string) : Board {
 }
 
 export default boardFromString
+export { parseBoardString}
