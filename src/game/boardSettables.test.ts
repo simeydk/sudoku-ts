@@ -1,8 +1,8 @@
 import puzzles from '../puzzles/puzzles'
 import boardFromString from './boardFromString';
-import {bd} from './boardFromString.test'
 import ISettable from './ISettable';
 
+const bd = boardFromString(puzzles.med[0])
 bd.updateCanBe()
 
 function settablesToString(settables: ISettable[]) {
