@@ -1,6 +1,9 @@
+import Board from './board';
 import ISettable from './ISettable';
 
 class Cell {
+
+    public neighbours: Cell[] = []
 
     constructor(
         public value: number = 0,
@@ -9,6 +12,7 @@ class Cell {
         public row: number | null = null,
         public column: number | null = null,
         public block: number | null = null,
+        public board: Board | null = null
     ) {
     }
     
@@ -33,8 +37,16 @@ class Cell {
     }
 
     public updateCanBe() {
-        if (this.value !== 0) {
+        if (!this.isEmpty) {
             this.canBe = this.canBe.map((x,i) => (i === this.value - 1))
+        }
+    }
+
+    public updateCanBeNeighbours() {
+        if (!this.isEmpty) {
+            this.neighbours.forEach(neighbour => {
+                neighbour.canBe[this.value - 1] = false
+            })
         }
     }
 
