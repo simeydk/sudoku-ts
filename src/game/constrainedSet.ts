@@ -6,6 +6,9 @@ interface IValue {
     cells: Cell[]
 }
 
+function cellIndexNum(cell:Cell):number {
+    return cell.index === null ? -1 : cell.index
+}
 
 class ConstrainedSet {
 
@@ -17,15 +20,7 @@ class ConstrainedSet {
     }
 
     get indexArray() : number[] {
-        return this
-            .cells
-            .map(cell => {
-                if (cell.index === null) {
-                    return -1
-                } else {
-                    return cell.index
-                }
-            })
+        return this.cells.map(cellIndexNum)
     }
 
     get completedCells() : Cell[] {
@@ -63,6 +58,12 @@ class ConstrainedSet {
         this.emptyCells.forEach(cell => {
             this.completedValues.forEach(value => cell.canBe[value-1] = false)
         })
+    }
+
+    get isComplete(): boolean { return this.emptyCells.length === 0}
+
+    get isValid(): boolean {
+        return [1,2,3,4,5,6,7,8,9].every(x => this.cells.filter(cell => cell.value === x).length <= 1)
     }
 
 }
