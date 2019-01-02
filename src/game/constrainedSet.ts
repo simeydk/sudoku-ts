@@ -63,7 +63,8 @@ class ConstrainedSet {
     get isComplete(): boolean { return this.emptyCells.length === 0}
 
     get isValid(): boolean {
-        return [1,2,3,4,5,6,7,8,9].every(x => this.cells.filter(cell => cell.value === x).length <= 1)
+        const values = this.cells.map(c => c.value)
+        return [1,2,3,4,5,6,7,8,9].every(x => values.filter(v => v === x).length <= 1)
     }
 
 }
