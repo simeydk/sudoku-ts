@@ -7,7 +7,7 @@ interface IValue {
 }
 
 function cellIndexNum(cell:Cell):number {
-    return cell.index === null ? -1 : cell.index
+    return cell.index === undefined ? -1 : cell.index
 }
 
 class ConstrainedSet {

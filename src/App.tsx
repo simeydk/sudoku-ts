@@ -7,7 +7,7 @@ import puzzles from './puzzles/puzzles';
 
 class App extends React.Component {
 
-  public b = boardFromString(puzzles.med[0])
+  public b = boardFromString(puzzles.hard[0])
 
   public state = {counter:0}
 
